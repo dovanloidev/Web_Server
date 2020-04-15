@@ -1,0 +1,23 @@
+{
+    "name": "ps10028_dovanloi_asm",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "scripts": {
+        "start": "nodemon app.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "LBaller",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "ejs": "^3.0.1",
+        "express": "^4.17.1",
+        "express-handlebars": "^4.0.2",
+        "mongoose": "^5.9.7",
+        "morgan": "^1.10.0",
+        "multer": "^1.4.2",
+        "pug": "^2.0.4",
+        "validator": "^13.0.0"
+    }
+}
