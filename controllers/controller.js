@@ -43,17 +43,13 @@ const err = (req, res) => {
 };
 
 const index = async(req, res) => {
-    let theKind = await TheKind.find().lean();
-    console.log(theKind._id)
-        // let shoes = await Shoes.find({ theLoai: theKind._id })
-        //     .populate({ path: 'theLoai', selected: "name" })
-        //     .lean();
-    let shoes = await Shoes.find().lean();
-    console.log(shoes)
+    let shoes = await Shoes.find({})
+        .select("theLoai quantity _id avatar gia status name created_date")
+        .populate("theLoai")
+        .lean();
 
     if (checkUser.email == '' || checkUser.password == '') {
-        res.writeHead(301, { Location: 'http://' + req.headers['host'] + '/login' });
-        res.end();
+        res.redirect('/login')
     } else {
         res.render('home', { shoes: shoes });
     }
@@ -73,29 +69,29 @@ const createIndex = async(req, res) => {
             console.log('Save error', err)
         } else {
             console.log('Save success')
-            res.writeHead(301, { Location: 'http://' + req.headers['host'] + '/' });
-            res.end();
+            res.redirect('/')
         }
     })
 };
 
-const editShoesById = (req, res) => {
-    console.log('EDIT SHOES ID')
+const editShoesById = async(req, res) => {
+    let shoes = await Shoes.findOne({ _id: req.params._id }).lean();
+    let theLoai = await TheKind.findOne({ _id: shoes.theLoai._id }).lean();
+    let theKind = await TheKind.find().lean();
+
     try {
-        Shoes.findOne({ _id: req.params._id }, (err, shoes) => {
-            res.render('editShoes', {
-                shoes: shoes
-            })
-            console.log(shoes)
-        }).lean();
+        res.render('editShoes', {
+            shoes: shoes,
+            theLoai: theLoai,
+            theKind: theKind
+        })
     } catch (error) {
         console.log(error)
     }
 };
 const editShoes = (req, res) => {
-    console.log('EDIT SHOES')
     let id = req.params._id
-
+    let shoes = Shoes.find().lean();
     let updateData = {
         name: req.body.name,
         theLoai: req.body.theLoai,
@@ -103,13 +99,15 @@ const editShoes = (req, res) => {
         status: req.body.status,
     }
 
-    console.log(req.file)
+    console.log(updateData.avatar);
+    if (req.file) {
+        updateData.avatar = req.file.originalname
+    }
 
     Shoes.findByIdAndUpdate(id, { $set: updateData })
         .then(() => {
             console.log('Updated successfully')
-            res.writeHead(301, { Location: 'http://' + req.headers['host'] + '/' });
-            res.end();
+            res.redirect('/')
         })
         .catch(err => {
             console.log('Updated failed', err)
@@ -120,8 +118,7 @@ const deleteShoes = (req, res) => {
     Shoes.findOneAndRemove(id)
         .then(() => {
             console.log('Delete successfully')
-            res.writeHead(301, { Location: 'http://' + req.headers['host'] + '/' });
-            res.end();
+            res.redirect('/')
         })
         .catch(error => {
             console.log('Delete failed', error)
@@ -146,8 +143,7 @@ const createTheKind = async(req, res) => {
             console.log('Save error', err);
         } else {
             console.log('Save success')
-            res.writeHead(301, { Location: 'http://' + req.headers['host'] + '/theKind' });
-            res.end();
+            res.redirect('/theKind')
         }
     })
 }
@@ -168,8 +164,7 @@ const deleteTheKind = async(req, res) => {
     TheKind.findByIdAndRemove({ _id: req.params._id })
         .then(() => {
             console.log('Delete successfully');
-            res.writeHead(301, { Location: 'http://' + req.headers['host'] + '/thekind' });
-            res.end();
+            res.redirect('/theKind')
         })
         .catch(error => {
             console.log('Delete failed', error);

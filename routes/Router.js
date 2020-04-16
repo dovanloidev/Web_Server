@@ -13,9 +13,10 @@ router.post('/err', controller.err);
 router.get('/', controller.index);
 router.post('/', upload.single('avatar'), controller.createIndex);
 
+// router.get('/showShoes/:_id/:idTheLoai', controller.editShoesById);
 router.get('/showShoes/:_id', controller.editShoesById);
-router.post('/editShoes/:_id', controller.editShoes);
-router.get('/removeShoes/:_id', controller.deleteShoes);
+router.post('/editShoes/:_id', upload.single('image'), controller.editShoes);
+router.get('/deleteShoes/:_id', controller.deleteShoes);
 router.get('/shoes', controller.shoes);
 
 router.get('/thekind', controller.thekind);

@@ -147,8 +147,12 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="formGroupExampleInput2">The Loai:</label>
-                                    <input type="text" class="form-control" id="formGroupExampleInput2"
-                                        placeholder="Nhap The Loai" name="theLoai" value="{{shoes.theLoai}}">
+                                    <select class="form-control" name="theLoai">
+                                        <option value="{{theLoai._id}}" select>{{theLoai.name}}</option>
+                                        {{#each theKind}}
+                                        <option value="{{_id}}">{{name}}</option>
+                                        {{/each}}
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="formGroupExampleInput2">Gia:</label>
@@ -158,13 +162,13 @@
                                 <div class="form-group">
                                     <label for="formGroupExampleInput2">Status:</label>
                                     <select class="form-control" name="status">
-                                        <option selected value="{{shoes.status}}">Status</option>
+                                        <option selected value="{{shoes.status}}">{{shoes.status}}</option>
                                         <option value="true">true</option>
                                         <option value="false">false</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <input type="file" class="form-control-file" id="exampleFormControlFile1" value="{{shoes.avatar}}">
+                                    <input type="file" class="form-control-file" id="exampleFormControlFile1" value="{{shoes.avatar}}" name="image">
                                 </div>
                                 <button type="submit" class="btn btn-primary">
                                     Sua

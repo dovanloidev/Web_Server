@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const shoeSchema = new mongoose.Schema({
     avatar: {
         type: String,
-        default: ""
+        required: true
     },
     name: {
         type: String,

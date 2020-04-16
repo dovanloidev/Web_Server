@@ -17,7 +17,6 @@ const showAll = async(req, res, next) => {
                 message: `Error is : ${err}`
             })
         } else {
-            console.log(shoes);
             res.send(JSON.stringify(shoes));
             // res.json({
             //     result: 'ok',

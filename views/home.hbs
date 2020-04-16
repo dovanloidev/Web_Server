@@ -159,7 +159,7 @@
                                     {{#each shoes}}
                                     <tr>
                                         <td>{{name}}</td>
-                                        <td>{{theLoai}}</td>
+                                        <td>{{theLoai.name}}</td>
                                         <td>{{gia}}</td>
                                         <td>
                                             <img
@@ -169,8 +169,9 @@
                                         </td>
                                         <td>{{status}}</td>
                                         <td>
+                                            {{!-- <a href="/showShoes/{{_id}}/{{theLoai._id}}" class="btn btn-info">Sua</a> --}}
                                             <a href="/showShoes/{{_id}}" class="btn btn-info">Sua</a>
-                                            <a href="/removeShoes/{{_id}}" class="btn btn-danger">Xoa</a>
+                                            <a href="/deleteShoes/{{_id}}" class="btn btn-danger">Xoa</a>
                                         </td>
                                     </tr>
                                     {{/each}}
