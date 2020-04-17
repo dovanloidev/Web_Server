@@ -90,18 +90,23 @@ const editShoesById = async(req, res) => {
     }
 };
 const editShoes = (req, res) => {
-    let id = req.params._id
-    let shoes = Shoes.find().lean();
-    let updateData = {
-        name: req.body.name,
-        theLoai: req.body.theLoai,
-        gia: req.body.gia,
-        status: req.body.status,
-    }
-
-    console.log(updateData.avatar);
+    let id = req.params._id;
+    let updateData;
     if (req.file) {
-        updateData.avatar = req.file.originalname
+        updateData = {
+            avatar: req.file.originalname,
+            name: req.body.name,
+            theLoai: req.body.theLoai,
+            gia: req.body.gia,
+            status: req.body.status,
+        }
+    } else {
+        updateData = {
+            name: req.body.name,
+            theLoai: req.body.theLoai,
+            gia: req.body.gia,
+            status: req.body.status,
+        }
     }
 
     Shoes.findByIdAndUpdate(id, { $set: updateData })
