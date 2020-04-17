@@ -21,7 +21,7 @@ router.get('/shoes', controller.shoes);
 
 router.get('/thekind', controller.thekind);
 router.post('/thekind', controller.createTheKind);
-router.get('/updatethekind/:_id', controller.updateTheKind);
+router.post('/updatethekind/:_id', controller.updateTheKind);
 router.get('/deletethekind/:_id', controller.deleteTheKind);
 
 router.get('/profile', controller.profile);
