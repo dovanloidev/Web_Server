@@ -1,10 +1,16 @@
 const Shoes = require('../model/Shoes')
+const TheKind = require('../model/TheKind')
 
 //show the list of shoes
 const showAll = async(req, res, next) => {
     let shoes = await Shoes.find({})
         .select('theLoai quantity _id avatar gia status name created_date')
         .populate('theLoai')
+    res.send(shoes);
+}
+
+const showTheKind = async(req, res, next) => {
+    let shoes = await TheKind.find({})
     res.send(shoes);
 }
 
@@ -147,5 +153,6 @@ module.exports = {
     showNL,
     add,
     update,
-    deleteOne
-}
+    deleteOne,
+    showTheKind,
+};
