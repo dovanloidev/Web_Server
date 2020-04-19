@@ -20,11 +20,8 @@ const shoeSchema = new mongoose.Schema({
         default: '0'
     },
     status: {
-        type: [{
-            type: String,
-            enum: ['true', 'false']
-        }],
-        default: ['true']
+        type: String,
+        default: "true"
     },
     created_date: {
         type: Date,

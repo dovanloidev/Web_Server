@@ -46,7 +46,7 @@ const index = async(req, res) => {
         .select('theLoai quantity _id avatar gia status name created_date')
         .populate('theLoai')
         .lean();
-
+    console.log(shoes);
     if (checkUser.email == '' || checkUser.password == '') {
         res.redirect('/login');
     } else {

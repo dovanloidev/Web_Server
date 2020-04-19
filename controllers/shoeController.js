@@ -2,30 +2,10 @@ const Shoes = require('../model/Shoes')
 
 //show the list of shoes
 const showAll = async(req, res, next) => {
-    Shoes.find({}).limit(100).sort({ name: 1 }).select({
-        avatar: 1,
-        name: 1,
-        theLoai: 1,
-        gia: 1,
-        status: 1,
-        created_date: 1
-    }).exec((err, shoes) => {
-        if (err) {
-            res.json({
-                result: 'failed',
-                data: [],
-                message: `Error is : ${err}`
-            })
-        } else {
-            res.send(JSON.stringify(shoes));
-            // res.json({
-            //     result: 'ok',
-            //     data: shoes,
-            //     count: shoes.length,
-            //     message: 'Query list of shoes successfully'
-            // })
-        }
-    });
+    let shoes = await Shoes.find({})
+        .select('theLoai quantity _id avatar gia status name created_date')
+        .populate('theLoai')
+    res.send(shoes);
 }
 
 //show single shoes
