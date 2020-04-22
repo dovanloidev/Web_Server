@@ -151,6 +151,8 @@
                                 </div>
                                 <div class="form-group">
                                     <button class="btn btn-primary p-3" type="submit">Sua</button>
+                                    <button class="btn btn-info p-3 edit_btn" type="button" 
+                                    data-id="{{users._id}}" data-pass="{{users.pass}}" data-name="{{users.name}}" data-email="{{users.email}}">Doi mat khau</button>
                                 </div>
                             </form>
                         </div>
@@ -160,6 +162,52 @@
             </div>
         </div>
     </section>
+
+    <!-- modal edit -->
+    <div class="modal fade" id="editModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit The Kind of Shoes</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form action="/updatethekind/" method="POST">
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Name:</label>
+                            <input type="text" class="form-control" id="edit-name-form" name="name" value="">
+                            <label for="formGroupExampleInput">Email:</label>
+                            <input type="text" class="form-control" id="edit-email-form" name="email" value="">
+                            <label for="formGroupExampleInput">Password:</label>
+                            <input type="text" class="form-control" id="edit-pass-form" name="pass" value="">
+                        </div>
+                        <button class="btn btn-primary" type="submit">Sua</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end of modal edit -->
+
+    {{!-- javascript modal --}}
+    <script type="text/javascript">
+        document.querySelectorAll('.edit_btn').forEach(item => {
+            item.addEventListener('click', e => {
+                let id = e.target.dataset.id;
+                let name = e.target.dataset.name;
+                let email = e.target.dataset.email;
+                let pass = e.target.dataset.pass;
+                document.querySelector('#edit-name-form').value = name;
+                document.querySelector('#edit-email-form').value = email;
+                document.querySelector('#edit-pass-form').value = pass;
+                document.querySelector('#editModal form').action = `/update/${id}`
+                $('#editModal').modal('show');
+            })
+        });
+
+    </script>
+    {{!-- end of javascript modal --}}
+
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

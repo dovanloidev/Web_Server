@@ -208,6 +208,7 @@ const profileUpdate = async(req, res) => {
     let updateData = {
         name: req.body.name,
         email: req.body.email,
+        pass: req.body.pass,
     };
     User.findByIdAndUpdate({ _id: req.params._id }, { $set: updateData })
         .then(() => {
