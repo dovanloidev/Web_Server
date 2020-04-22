@@ -169,7 +169,7 @@
                                             <button type="button" name="edit_btn"
                                                 class="btn btn-primary btn-ao edit_btn" data-id="{{_id}}" data-name="{{name}}">Sua</button>
 
-                                            <a href="/deletethekind/{{_id}}" class="btn btn-danger">Xoa</a>
+                                            <a href="/deletethekind/{{_id}}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?')">Xoa</a>
                                         </td>
                                     </tr>
                                     {{/each}}
@@ -218,7 +218,6 @@
                     <form action="/updatethekind/" method="POST">
                         <div class="form-group">
                             <label for="formGroupExampleInput">Ten:</label>
-                            {{!-- <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Nhap Ten" name="name"> --}}
                             <input type="text" class="form-control" id="edit-name-form" name="name" value="">
                         </div>
                         <button class="btn btn-primary" type="submit">Sua</button>
