@@ -4,8 +4,8 @@ const Shoes = require('../model/Shoes');
 const TheKind = require('../model/TheKind');
 
 var checkUser = {
-    email: '',
-    password: '',
+    email: null,
+    password: null,
 };
 
 const register = async(req, res) => {
@@ -28,22 +28,24 @@ const registerPost = async(req, res) => {
         }
     });
 };
-const login = async(req, res) => {
-    console.log('LOGIN');
+const login = (req, res) => {
     res.render('login');
 };
 
-const err = (req, res) => {
-    checkUser = {
+const err = async(req, res) => {
+    let user = await User.findOne({
         email: req.body.email,
-        password: req.body.password,
-    };
-    if (checkUser.username == 'lcoder@gmail.com' || checkUser.password == 123) {
-        res.writeHead(301, { Location: 'http://' + req.headers['host'] + '/' });
-        res.end();
-    } else {
-        res.render('login');
-    }
+        pass: req.body.password,
+    }).then(user => {
+        console.log(user)
+        checkUser = {
+            email: user.email,
+            password: user.pass,
+        };
+        res.redirect('/');
+    }).catch(err => {
+        res.redirect('/login');
+    })
 };
 
 const index = async(req, res) => {
@@ -51,7 +53,7 @@ const index = async(req, res) => {
         .select('theLoai quantity _id avatar gia status name created_date')
         .populate('theLoai')
         .lean();
-    if (checkUser.email == '' || checkUser.password == '') {
+    if (checkUser.email == null || checkUser.password == null) {
         res.redirect('/login');
     } else {
         res.render('home', { shoes: shoes });
@@ -138,8 +140,12 @@ const shoes = async(req, res) => {
 };
 
 const thekind = async(req, res) => {
-    let thekind = await TheKind.find().lean();
-    res.render('theKind', { theKind: thekind });
+    if (checkUser.email != null || checkUser.password != null) {
+        let thekind = await TheKind.find().lean();
+        res.render('theKind', { theKind: thekind });
+    } else {
+        res.redirect('/login')
+    }
 };
 const createTheKind = async(req, res) => {
     let theKind = await new TheKind({
@@ -180,7 +186,11 @@ const deleteTheKind = async(req, res) => {
 };
 
 const profile = (req, res) => {
-    res.render('profile');
+    if (checkUser.email != null || checkUser.password != null) {
+        res.render('profile');
+    } else {
+        res.redirect('/login')
+    }
 };
 const profileById = async(req, res) => {
     try {
@@ -221,10 +231,14 @@ const profileUpdate = async(req, res) => {
 };
 
 const users = async(req, res) => {
-    let user = await User.find({}).lean();
-    res.render('users', {
-        users: user,
-    })
+    if (checkUser.email != null || checkUser.password != null) {
+        let user = await User.find({}).lean();
+        res.render('users', {
+            users: user,
+        })
+    } else {
+        res.redirect('/login')
+    }
 };
 
 module.exports = {
