@@ -158,7 +158,7 @@
                                         <td>{{email}}</td>
                                         <td>
                                             <a href="/profile/{{_id}}" class="btn btn-info">Sua</a>
-                                            <a href="/delete/{{_id}}" class="btn btn-danger">Xoa</a>
+                                            <a href="/delete/{{_id}}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?')">Xoa</a>
                                         </td>
                                     </tr>
                                     {{/each}}

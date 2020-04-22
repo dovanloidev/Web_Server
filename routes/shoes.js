@@ -5,6 +5,7 @@ const shoesController = require('../controllers/shoeController')
 const upload = require('../middleware/upload')
 
 router.get('/', shoesController.showAll)
+router.get('/name/:name', shoesController.showString)
 router.get('/theKind', shoesController.showTheKind)
 router.post('/show', shoesController.showOne)
 router.post('/add', upload.single('avatar'), shoesController.add)

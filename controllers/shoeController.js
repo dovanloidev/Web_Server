@@ -8,6 +8,12 @@ const showAll = async(req, res, next) => {
         .populate('theLoai')
     res.send(shoes);
 }
+const showString = async(req, res, next) => {
+    var str = req.params.name;
+    let shoes = await Shoes.find({ name: str });
+    console.log(shoes);
+    res.send(shoes);
+}
 
 const showTheKind = async(req, res, next) => {
     let shoes = await TheKind.find({})
@@ -155,4 +161,5 @@ module.exports = {
     update,
     deleteOne,
     showTheKind,
+    showString,
 };

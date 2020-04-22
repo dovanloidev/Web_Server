@@ -9,19 +9,24 @@ var checkUser = {
 };
 
 const register = async(req, res) => {
-    const newUser = new User({
+    res.render('register');
+
+}
+const registerPost = async(req, res) => {
+    const newUser = await new User({
         email: req.body.email,
         name: req.body.name,
         pass: req.body.pass,
     });
     newUser.save((err) => {
         if (err) {
-            console.log(err);
+            console.log('Add failed', err);
+            res.redirect('/register');
         } else {
-            res.redirect('home');
+            console.log('Add successfully');
+            res.redirect('/users');
         }
     });
-    res.render('register');
 };
 const login = async(req, res) => {
     console.log('LOGIN');
@@ -46,7 +51,6 @@ const index = async(req, res) => {
         .select('theLoai quantity _id avatar gia status name created_date')
         .populate('theLoai')
         .lean();
-    console.log(shoes);
     if (checkUser.email == '' || checkUser.password == '') {
         res.redirect('/login');
     } else {
@@ -119,7 +123,7 @@ const editShoes = (req, res) => {
 };
 const deleteShoes = (req, res) => {
     let id = req.params._id;
-    Shoes.findOneAndRemove(id)
+    Shoes.findByIdAndDelete(id)
         .then(() => {
             console.log('Delete successfully');
             res.redirect('/');
@@ -193,14 +197,11 @@ const profileById = async(req, res) => {
 const profileDelete = async(req, res) => {
     User.findByIdAndRemove({ _id: req.params._id })
         .then(() => {
-            res.json({
-                message: 'Employee deleted successfully',
-            });
+            console.log('Delete successfully');
+            res.redirect('/users')
         })
         .catch((error) => {
-            res.json({
-                message: 'An error occurred!',
-            });
+            console.log('Delete failed', error);
         });
 };
 const profileUpdate = async(req, res) => {
@@ -210,24 +211,19 @@ const profileUpdate = async(req, res) => {
     };
     User.findByIdAndUpdate({ _id: req.params._id }, { $set: updateData })
         .then(() => {
-            res.json({
-                data: updateData,
-                message: 'User update successfully',
-            });
+            console.log('Update successfully')
+            res.redirect('/users')
         })
-        .catch(() => {
-            res.json({
-                message: 'An error occurred!',
-            });
+        .catch((error) => {
+            console.log('Delete failed', error);
         });
 };
 
 const users = async(req, res) => {
-    await User.find({}, (err, users) => {
-        res.render('users', {
-            users: users,
-        });
-    }).lean();
+    let user = await User.find({}).lean();
+    res.render('users', {
+        users: user,
+    })
 };
 
 module.exports = {
@@ -249,4 +245,5 @@ module.exports = {
     profileDelete,
     profileUpdate,
     users,
+    registerPost,
 };

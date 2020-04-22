@@ -6,6 +6,7 @@ const upload = require('../middleware/upload');
 
 
 router.get('/register', controller.register);
+router.post('/register', controller.registerPost);
 router.get('/login', controller.login);
 
 router.post('/err', controller.err);
@@ -13,7 +14,6 @@ router.post('/err', controller.err);
 router.get('/', controller.index);
 router.post('/', upload.single('avatar'), controller.createIndex);
 
-// router.get('/showShoes/:_id/:idTheLoai', controller.editShoesById);
 router.get('/showShoes/:_id', controller.editShoesById);
 router.post('/editShoes/:_id', upload.single('avatar'), controller.editShoes);
 router.get('/deleteShoes/:_id', controller.deleteShoes);
