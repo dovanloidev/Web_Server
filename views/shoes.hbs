@@ -132,6 +132,9 @@
                     <div class="row pt-md-5 mt-md-3 mb-5">
                         <div class="col-xl-2 col-sm-2 p-2"></div>
                         <div class="col-xl-8 col-sm-8 p-2">
+                            <div class="alert alert-danger" role="a lert">
+                                {{errors}}
+                            </div>
                             <form action="/" method="POST" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <label for="formGroupExampleInput">Ten:</label>
@@ -164,6 +167,7 @@
                                     Them
                                 </button>
                             </form>
+                            <label for="formGroupExampleInput2">{{err}}</label>
                         </div>
                         <div class="col-xl-2 col-sm-2 p-2"></div>
                     </div>

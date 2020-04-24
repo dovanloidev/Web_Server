@@ -60,6 +60,20 @@ const index = async(req, res) => {
     }
 };
 const createIndex = async(req, res) => {
+    var errors=[];
+    if(!req.body.name){
+        errors.push('Name is required');
+    }
+    if(!req.file){
+        errors.push('Image is required');
+    }
+    if(errors.length){
+        let thekind = await TheKind.find().lean();
+		res.render('shoes', { theKind: thekind, errors: errors });
+        console.log(errors)
+        return;
+    }
+
     let shoes = await new Shoes({
         name: req.body.name,
         theLoai: req.body.theLoai,
@@ -148,6 +162,7 @@ const thekind = async(req, res) => {
     }
 };
 const createTheKind = async(req, res) => {
+
     let theKind = await new TheKind({
         name: req.body.name,
     });
